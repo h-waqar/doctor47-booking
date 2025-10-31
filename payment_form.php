@@ -477,6 +477,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
   /* Sidebar Styles go here  */
   /* ******************** Variable Styles *********************** */
 
@@ -589,6 +590,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   /* Sidebar Styles ENDS  here  */
+  /* Input Field Styles --> */
+  .input-wrapper input,
+  select {
+    border: 1px solid black !important;
+    border-radius: 0 !important;
+  }
+
+  /* <-- Input Field Styles  */
+
+  /* Summary Styles -->  */
+  /* Make sure your @import and :root variables
+  are loaded before this CSS.
+*/
+
+  /* Main card container */
+  .summary-card {
+    font-family: var(--bs-font-primary, "Montserrat", sans-serif);
+    border: 1px solid var(--bs-primary-color);
+    border-radius: 8px;
+    overflow: hidden;
+    /* max-width: 450px; */
+    margin: 1.5em 0;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); */
+    background-color: var(--bs-white, #ffffff);
+  }
+
+  /* Card Header (Blue bar) */
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bs-primary-color, #3c72c8);
+    color: var(--bs-white, #ffffff);
+    padding: 1rem 1.25rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    /* Bolder total */
+  }
+
+  /* Card Body (White area with line items) */
+  .summary-body {
+    padding: 0.75rem 1.25rem;
+    /* Padding for the rows */
+    color: var(--bs-text-primary, #333);
+  }
+
+  /* Each line item row */
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    /* Vertical padding for spacing */
+    font-size: 1rem;
+  }
+
+  /* Add a border between rows, but not after the last one */
+  .summary-row:not(:last-child) {
+    border-bottom: 1px solid var(--bs-bg-light, #f0f0f0);
+  }
+
+  /* Label (left side) of a row */
+  .summary-row span:first-child {
+    color: var(--bs-text-muted, #555);
+  }
+
+  /* Value (right side) of a row */
+  .summary-row span:last-child {
+    font-weight: 600;
+    color: var(--bs-text-secondary, #444);
+  }
+
+  /* <-Summary Styles end  */
+
 
   .error {
     color: #ff0000;
@@ -604,14 +679,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   .sec_heading h4 {
-    color: #003F87;
+    color: black !important;
+    /* color: var(--bs-primary-color); */
     position: relative;
-    font-size: 20px;
-    font-weight: 600;
+    font-family: var(--bs-font-primary);
+    font-size: var(--bs-heading);
+    font-weight: 700;
     padding-bottom: 15px;
   }
 
-  .sec_heading h4:after {
+  /* .sec_heading h4:after {
     content: "";
     position: absolute;
     background: #003F87;
@@ -619,7 +696,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     height: 2px;
     left: 0;
     bottom: 0;
-  }
+  } */
 
   h2 {
     text-align: center;
@@ -740,10 +817,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-  #BookingFormEt input[type="submit"],
+  /* #BookingFormEt input[type="submit"],
   #prevBtn,
   #nextBtn {
-
     font-size: 16px;
     font-weight: 600;
     fill: #003F87;
@@ -759,7 +835,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     margin-left: 15px;
     font-size: 18px;
     margin-bottom: 30px;
+  } */
+
+  .bs-btn-next {
+    background-color: var(--bs-primary-color) !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 2rem !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 0 !important;
+    cursor: pointer !important;
   }
+
+  .bs-btn-prev {
+    background: var(--bs-bg-light) !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: bold !important;
+    border: 0 !important;
+    margin-right: 0.5rem;
+    color: var(--bs-text-secondary) !important;
+    cursor: pointer !important;
+  }
+
 
   #BookingFormEt input[type="submit"]:hover {
     background-color: #D62828;
@@ -816,7 +914,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   /* Hide all steps by default: */
   .tab {
     display: none;
-    padding: 30px 0;
+    /* padding: 30px 0; */
   }
 
   #prevBtn,
@@ -1001,7 +1099,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   .overview-row {
-    margin-top: 40px;
+    /* margin-top: 40px; */
     background-color: white;
     /* box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.1);
             padding: 20px;*/
@@ -1128,6 +1226,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   .health-care-worker-wrapper {
     width: 50%;
+  }
+
+  .payment-details #cardCvv,
+  input,
+  select {
+    border: 1px solid black !important;
+    border-radius: 0 !important;
   }
 
   .payment-details .first-row {
@@ -1313,6 +1418,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   .test_box_wrapper label .etl_box {
     padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   /*.etl_middle .etl_box {
@@ -1422,6 +1532,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     .heading_which_island {
       margin-top: 40px;
+      font-size: 36px;
     }
   }
 
@@ -1500,7 +1611,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="dmt-container-paper-details" id="BookingFormEt">
       <!-- Circles which indicates the steps of the form: -->
-      <div style="text-align:center;margin-top:40px; display: flex; margin: 35px auto; justify-content: space-between;">
+      <div class="d-none"
+        style="text-align:center;margin-top:40px; display: flex; margin: 35px auto; justify-content: space-between;">
         <span class="step">
           <p>1) Personal Details</p>
         </span>
@@ -1648,7 +1760,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   id="inputPCRAntigen" />
                 <div class="front-end etl_box">
                   <p>PCR/Antigen Test</p>
-                  <span>&nbsp;</span>
+                  <!-- <span>&nbsp;</span> -->
                 </div>
               </label>
 
@@ -1971,35 +2083,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="sec_heading">
               <h4>Order Summary</h4>
             </div>
-            <table class="summary_table">
-              <thead>
-                <tr>
-                  <th colspan="2">Services</th>
-                  <th>Price (<?php echo $currency_sign; ?>)</th>
-                  <!-- <th></th>-->
-                  <th>Total (<?php echo $currency_sign; ?>)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td id="etlTestName" colspan="2">-</td>
-                  <td><?php echo $currency_sign; ?> <span id="etlTestPrice">0</span></td>
-                  <!--<td></td>-->
-                  <td><?php echo $currency_sign; ?> <span id="etlTestPriceTotal">0</span></td>
-                </tr>
-                <tr>
-                  <td colspan="3" style="text-align: right;">Total </td>
-                  <td><?php echo $currency_sign; ?> <span id="etlTestPriceGrandTotal">0</span>
-                  </td>
-                </tr>
-                <!-- <tr>
-                                <td colspan="3" style="text-align: right;">Total after 20% online discount:</td>
-                                <td><?php // echo $currency_sign;
-                                    ?> <span id="etlTotalAfterDiscount">0</span>
-                                </td>
-                            </tr>-->
-              </tbody>
-            </table>
+            <div class="summary-card">
+
+              <div class="summary-header">
+                <span>Total</span>
+                <span>
+                  <?php echo $currency_sign; ?> <span id="etlTestPriceGrandTotal">0</span>
+                </span>
+              </div>
+
+              <div class="summary-body">
+                <div class="summary-row">
+                  <span>Services</span>
+                  <span id="etlTestName">-</span>
+                </div>
+
+                <div class="summary-row">
+                  <span>Price</span>
+                  <span>
+                    <?php echo $currency_sign; ?> <span id="etlTestPrice">0</span>
+                  </span>
+                </div>
+
+                <div class="summary-row">
+                  <span>Total</span>
+                  <span>
+                    <?php echo $currency_sign; ?> <span id="etlTestPriceTotal">0</span>
+                  </span>
+                </div>
+
+              </div>
+            </div>
           </div>
 
 
@@ -2103,7 +2217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input type="text" value="no" hidden id="submitCheck" name="submit_check">
           <div class="row">
             <div class="col-100">
-              <input type="submit" id="submitForm" onclick="return validateForm()" value="Book Now">
+              <!-- <input type="submit" class="bs-btn-next" id="submitForm" onclick="return validateForm()" value="Book Now"> -->
             </div>
           </div>
 
@@ -2111,10 +2225,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div><!-- Tab 5 Content Ends -->
         <div style="overflow:auto;">
-          <div style="float:right;">
-            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-
+          <div style="">
+            <button type="button" id="prevBtn" class="bs-btn-prev" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" id="nextBtn" class="bs-btn-next" onclick="nextPrev(1)">Continue</button>
+            <input type="submit" class="bs-btn-next" id="submitForm" onclick="return validateForm()" value="Book Now">
           </div>
         </div>
 
@@ -3038,6 +3152,14 @@ function showTab(n) {
   // This function will display the specified tab of the form...
   var x = document.getElementsByClassName("tab");
 
+  if (n === 4) {
+    console.log('Hiding prevBtn via inline style -----');
+    document.getElementById('submitForm').style.display = 'inline-block';
+  } else {
+    document.getElementById('submitForm').style.display = 'none';
+  }
+
+
   x[n].style.display = "block";
 
   //... and fix the Previous/Next buttons:
@@ -3067,7 +3189,7 @@ function nextPrev(n) {
   // if n is equal to 1 means user have click on next tab so validate the form
   if (n == 1) {
     if (!valForm()) {
-      return false;
+      // return false;
     }
   }
 
@@ -3230,6 +3352,12 @@ function fixStepIndicator(n) {
 
   // Loop through all steps
   steps.forEach((step, index) => {
+    if (step == 5) {
+      document.getElementById('prevBtn').classList.add('d-none');
+    } else {
+      document.getElementById('prevBtn').classList.remove('d-none');
+    }
+
     if (index <= n) {
       step.classList.add('bs-active');
     } else {
