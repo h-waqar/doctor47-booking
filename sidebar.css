@@ -1,0 +1,102 @@
+/* ******************** Variable Styles *********************** */
+
+/* === Root Variable (from user) === */
+:root {
+  --bs-primary-color: #3c72c8;
+  --bs-white: #ffffff;
+
+  --bs-bg-light: #eff6ff;
+
+  --bs-text-primary: #333;
+  --bs-text-secondary: #444;
+  --bs-text-muted: #555;
+  --bs-link-color: #3c72c7;
+
+  /* Text Sizes */
+  --bs-heading: 64px;
+  --bs-text: 16px;
+  --bs-font-primary: "Montserrat", sans-serif;
+}
+
+/* ******************** Side Bar Style *********************** */
+
+/* .bs-navmenu {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+} */
+.bs-navmenu ul {
+  /* padding-left: 0px; */
+  position: relative;
+  list-style-type: none;
+}
+.bs-navmenu ul::after {
+  content: "";
+  position: absolute;
+  border-left: dotted grey 2px;
+  height: calc(100% - 52px);
+  left: 31px;
+  top: 0;
+  z-index: -2;
+  margin-top: 29px;
+}
+.bs-navmenu ul li {
+  padding: 10px 0 10px 18px;
+}
+.bs-navmenu ul li a {
+  text-decoration: none;
+  position: relative;
+  color: gray;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  font-weight: 500;
+  width: 200px;
+  display: block;
+  cursor: context-menu;
+}
+.bs-navmenu ul li a:before {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 16px;
+  height: 16px;
+  left: -26px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50px;
+  border: 1px solid grey;
+  /* transition: background 500ms; */
+}
+.bs-navmenu ul li a.bs-active::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 151%;
+  left: -10%;
+  background: var(--bs-primary-color);
+  top: -15px;
+  z-index: 8;
+  margin-top: 28px;
+  /* transition: background 500ms; */
+}
+.bs-navmenu ul li a.bs-active {
+  font-weight: 700;
+  color: var(--bs-primary-color);
+}
+.bs-navmenu ul li a.bs-active:before {
+  content: "";
+  color: white;
+  font-weight: 300;
+  font-size: 20px;
+  border-color: var(--bs-primary-color);
+  background: var(--bs-primary-color);
+}
+.bs-navmenu ul li a.bs-active:focus::before {
+  content: "";
+  border-color: var(--bs-primary-color);
+  background: var(--bs-primary-color);
+}
+
+.bs-last::after {
+  display: none;
+}
