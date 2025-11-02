@@ -499,6 +499,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     --bs-font-primary: "Montserrat", sans-serif;
   }
 
+  .bs-label {
+    padding: 0 !important;
+    font-size: 1rem;
+    color: var(--bs-text-secondary);
+  }
+
   /* ******************** Side Bar Style *********************** */
 
   /* .bs-navmenu {
@@ -530,7 +536,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     text-decoration: none !important;
     position: relative !important;
     color: gray !important;
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
     line-height: 1rem !important;
     font-weight: 500 !important;
     width: 200px !important;
@@ -595,6 +601,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   select {
     border: 1px solid black !important;
     border-radius: 0 !important;
+    max-height: 50px !important;
   }
 
   /* <-- Input Field Styles  */
@@ -685,7 +692,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     font-family: var(--bs-font-primary);
     font-size: var(--bs-heading);
     font-weight: 700;
-    padding-bottom: 15px;
+    /* padding-bottom: 15px; */
+  }
+
+  .sec_heading h6 {
+    font-family: var(--bs-font-primary);
+    color: var(--bs-text-secondary)
   }
 
   /* .sec_heading h4:after {
@@ -917,10 +929,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     /* padding: 30px 0; */
   }
 
-  #prevBtn,
+  /* #prevBtn,
   #nextBtn {
     margin-top: 30px;
-  }
+  } */
 
   #BookingFormEt button:hover {
     opacity: 0.8;
@@ -994,6 +1006,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   .form-row .input-wrapper input {
     padding-left: 50px;
+    max-height: 50px;
   }
 
   .hide {
@@ -1369,8 +1382,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   .etl_middle input[type=radio]:checked+.etl_box {
-    background-color: #d5e1d5;
-    border: 1px solid #008000;
+    background-color: var(--bs-bg-light);
+    border: 1px solid var(--bs-primary-color);
   }
 
   .etl_middle input[type=radio]:checked+.etl_box p {}
@@ -1642,11 +1655,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="shadow-container">
             <div class="sec_heading">
               <h4>Personal Information</h4>
+              <h6>Tell us a bit about yourself so we can confirm your appointment.</h6>
             </div>
             <div class="form-row">
               <div class="input-wrapper">
+                <label for="firstName" class="bs-label">First name</label>
                 <input type="text" onfocus=active_input(this) onfocusout=inactive_input(this) data-value="First Name"
-                  id="firstName" name="first_name"
+                  id="firstName" name="first_name" placeholder="First name"
                   value="<?php
                                                                                                                                                                                     if (isset($_POST['first_name'])) {
                                                                                                                                                                                         echo $_POST['first_name'];
@@ -1654,36 +1669,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                                                                                                                                     ?>"
                   required>
                 <?php
-                                    if (!isset($_POST['first_name'])) {
-                                        echo '<span>First Name <span class="required_sign">*</span></span>';
-                                    } else if (isset($_POST['first_name'])) {
-                                        if (empty(trim($_POST['first_name']))) {
-                                            echo '<span>First Name <span class="required_sign">*</span></span>';
-                                        } else {
-                                            echo '<span><span class="required_sign"></span></span>';
-                                        }
-                                    }
+                                    // if (!isset($_POST['first_name'])) {
+                                    //     echo '<span>First Name <span class="required_sign">*</span></span>';
+                                    // } else if (isset($_POST['first_name'])) {
+                                    //     if (empty(trim($_POST['first_name']))) {
+                                    //         echo '<span>First Name <span class="required_sign">*</span></span>';
+                                    //     } else {
+                                    //         echo '<span><span class="required_sign"></span></span>';
+                                    //     }
+                                    // }
                                     ?>
                 <p></p>
               </div>
               <div class="input-wrapper">
+                <label for="lastName" class="bs-label">Last name</label>
                 <input type="text" onfocus=active_input(this) onfocusout=inactive_input(this) data-value="Last Name"
-                  id="lastName" name="last_name" required
+                  id="lastName" name="last_name" placeholder="Last name" required
                   value="<?php
                                                                                                                                                                                         if (isset($_POST['last_name'])) {
                                                                                                                                                                                             echo $_POST['last_name'];
                                                                                                                                                                                         }
                                                                                                                                                                                         ?>">
                 <?php
-                                    if (!isset($_POST['last_name'])) {
-                                        echo '<span>Last Name <span class="required_sign">*</span></span>';
-                                    } else if (isset($_POST['last_name'])) {
-                                        if (empty(trim($_POST['last_name']))) {
-                                            echo '<span>Last Name <span class="required_sign">*</span></span>';
-                                        } else {
-                                            echo '<span><span class="required_sign"></span></span>';
-                                        }
-                                    }
+                                    // if (!isset($_POST['last_name'])) {
+                                    //     echo '<span>Last Name <span class="required_sign">*</span></span>';
+                                    // } else if (isset($_POST['last_name'])) {
+                                    //     if (empty(trim($_POST['last_name']))) {
+                                    //         echo '<span>Last Name <span class="required_sign">*</span></span>';
+                                    //     } else {
+                                    //         echo '<span><span class="required_sign"></span></span>';
+                                    //     }
+                                    // }
                                     ?>
                 <p></p>
               </div>
@@ -1696,44 +1712,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-row">
 
               <div class="input-wrapper">
+                <label for="emailAddress" class="bs-label">Email address</label>
                 <input type="text" onfocus=active_input(this) onfocusout=inactive_input(this) id="emailAddress"
-                  name="email_address" data-value="Email Address" required
+                  name="email_address" data-value="Email Address" placeholder="Email address" required
                   value="<?php
                                                                                                                                                                                                     if (isset($_POST['email_address'])) {
                                                                                                                                                                                                         echo $_POST['email_address'];
                                                                                                                                                                                                     }
                                                                                                                                                                                                     ?>">
                 <?php
-                                    if (!isset($_POST['email_address'])) {
-                                        echo '<span>Email Address <span class="required_sign">*</span></span>';
-                                    } else if (isset($_POST['email_address'])) {
-                                        if (empty(trim($_POST['email_address']))) {
-                                            echo '<span>Email Address <span class="required_sign">*</span></span>';
-                                        } else {
-                                            echo '<span><span class="required_sign"></span></span>';
-                                        }
-                                    }
+                                    // if (!isset($_POST['email_address'])) {
+                                    //     echo '<span>Email Address <span class="required_sign">*</span></span>';
+                                    // } else if (isset($_POST['email_address'])) {
+                                    //     if (empty(trim($_POST['email_address']))) {
+                                    //         echo '<span>Email Address <span class="required_sign">*</span></span>';
+                                    //     } else {
+                                    //         echo '<span><span class="required_sign"></span></span>';
+                                    //     }
+                                    // }
                                     ?>
                 <p id="emailErrorPlaceholder"></p>
               </div>
               <div class="input-wrapper">
+                <label for="phoneNumber" class="bs-label">Contact number</label>
                 <input type="text" onfocus=active_input(this) onfocusout=inactive_input(this)
-                  data-value="Contact Number" id="phoneNumber" name="phone_number" required
+                  data-value="Contact Number" placeholder="Contact number" id="phoneNumber" name="phone_number" required
                   value="<?php
                                                                                                                                                                                                     if (isset($_POST['phone_number'])) {
                                                                                                                                                                                                         echo $_POST['phone_number'];
                                                                                                                                                                                                     }
                                                                                                                                                                                                     ?>">
                 <?php
-                                    if (!isset($_POST['phone_number'])) {
-                                        echo '<span>Contact Number <span class="required_sign">*</span></span>';
-                                    } else if (isset($_POST['phone_number'])) {
-                                        if (empty(trim($_POST['phone_number']))) {
-                                            echo '<span>Contact Number <span class="required_sign">*</span></span>';
-                                        } else {
-                                            echo '<span><span class="required_sign"></span></span>';
-                                        }
-                                    }
+                                    // if (!isset($_POST['phone_number'])) {
+                                    //     echo '<span>Contact Number <span class="required_sign">*</span></span>';
+                                    // } else if (isset($_POST['phone_number'])) {
+                                    //     if (empty(trim($_POST['phone_number']))) {
+                                    //         echo '<span>Contact Number <span class="required_sign">*</span></span>';
+                                    //     } else {
+                                    //         echo '<span><span class="required_sign"></span></span>';
+                                    //     }
+                                    // }
                                     ?>
                 <p></p>
               </div>
@@ -1883,7 +1901,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="form-row testing-center">
             <!-- <h6 id="labelDate">Which date would you like us to perform your Covid 19 Test on?</h6> -->
             <div class="input-wrapper w-100" style="padding: 0; width: 100%">
-              <input autocomplete="off" type="text" id="testDate" name="test_date" placeholder="Selected Test Date"
+              <input autocomplete="off" type="text" id="testDate" name="test_date" placeholder="Selected test date"
                 value="<?php echo $selected_test_date; ?>" onchange="get_time_slots(this.value)">
             </div>
             <!-- <div class="input-wrapper w-100" style="padding: 0; width: 100%; display:none;">
@@ -2132,7 +2150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="payment-details">
             <div class="">
               <input data-value="Credit Card Number" onfocus=active_input(this) onfocusout=inactive_input(this)
-                type="text" id="accountNumber" name="accountNumber" placeholder="Credit Card Number"
+                type="text" id="accountNumber" name="accountNumber" placeholder="Credit card number"
                 value="<?php
                                                                                                                                                                                                                                 if (isset($_POST['accountNumber'])) {
                                                                                                                                                                                                                                     echo $_POST['accountNumber'];
@@ -2143,7 +2161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="">
               <input data-value="Card Holder Name" type="text" id="fullName" name="fullName"
-                placeholder="Card Holder Name"
+                placeholder="Card holder name"
                 value="<?php
                                                                                                                                                         if (isset($_POST['fullName'])) {
                                                                                                                                                             echo $_POST['fullName'];
@@ -2194,7 +2212,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             </select>
             <input data-value="CVV" onfocus=active_input(this) onfocusout=inactive_input(this) type="text" id="cardCvv"
-              name="card_cvv" placeholder="Card CVV No"
+              name="card_cvv" placeholder="Card cvv no"
               value="<?php
                                                                                                                                                                                             if (isset($_POST['card_cvv'])) {
                                                                                                                                                                                                 echo $_POST['card_cvv'];
@@ -3189,6 +3207,7 @@ function nextPrev(n) {
   // if n is equal to 1 means user have click on next tab so validate the form
   if (n == 1) {
     if (!valForm()) {
+      // @validate
       // return false;
     }
   }
