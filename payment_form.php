@@ -299,7 +299,7 @@ $customer_message = '
 <html>
 <head>
     <meta charset="UTF-8">
-    <style>
+     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -308,92 +308,20 @@ $customer_message = '
             margin: 0 auto;
             padding: 20px;
         }
-        .subject-line {
-            margin-bottom: 25px;
-            font-size: 16px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
         .company-name {
             font-weight: bold;
-            color: #27ae60;
-        }
-        .greeting {
-            margin: 20px 0;
-        }
-        .intro {
-            margin: 15px 0;
-        }
-        .booking-section {
-            margin: 30px 0;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        .booking-section h3 {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0 0 20px 0;
-            color: #27ae60;
-        }
-        .booking-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
         }
         .booking-section li {
             margin: 12px 0;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-        .booking-section strong {
-            font-weight: bold;
-            color: #555;
-            display: inline-block;
-            min-width: 140px;
-        }
-        .info-text {
-            margin: 20px 0;
-            line-height: 1.7;
-        }
-        .contact-info {
-            margin: 25px 0;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-left: 4px solid #27ae60;
-        }
-        .contact-info p {
-            margin: 5px 0;
-            font-weight: 500;
-        }
-        .contact-item {
-            margin: 8px 0;
-            font-size: 15px;
-        }
-        .footer {
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 2px solid #f0f0f0;
-        }
-        .footer p {
-            margin: 5px 0;
         }
         .tagline {
             font-style: italic;
-            color: #27ae60;
             margin-top: 8px;
             font-size: 14px;
-        }
-        .highlight {
-            color: #27ae60;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="subject-line">
-        <strong>Subject:</strong> 🩺 Booking Confirmation — Seychelles Medical Services & Doctor247
-    </div>
 
     <div class="greeting">
         <p>Dear ' . $booking_data['full_name'] . ',</p>
@@ -2072,7 +2000,7 @@ wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website
             <!-- <h6 id="labelDate">Which date would you like us to perform your Covid 19 Test on?</h6> -->
             <div class="input-wrapper w-100" style="padding: 0; width: 100%">
               <input autocomplete="off" type="text" id="testDate" name="test_date" placeholder="Selected test date"
-                value="<?php echo $selected_test_date; ?>" onchange="get_time_slots(this.value)">
+                value="<?php echo $selected_test_date; ?>" onchange="get_bs_time_slots(this.value)">
             </div>
             <!-- <div class="input-wrapper w-100" style="padding: 0; width: 100%; display:none;">
                                 <select id="testLocation" name="test_location">
@@ -2873,7 +2801,7 @@ function submitTheForm(element) {
   form.submit();
 }
 $(document).ready(function() {
-  get_time_slots('<?php echo date('Y-m-d'); ?>');
+  get_bs_time_slots('<?php echo date('Y-m-d'); ?>');
 
 
 
@@ -3478,7 +3406,7 @@ function nextPrev(n) {
   if (n == 1) {
     if (!valForm()) {
       // @validate
-      // return false;
+      return false;
     }
   }
 
