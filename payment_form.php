@@ -236,64 +236,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: Arial, sans-serif; color: #333; }
-        h1 { color: #5e9ca0; font-size: 24px; }
-        table { border-collapse: collapse; width: 80%; margin: 20px 0; }
-        td { padding: 15px; border: 1px solid rgba(0,0,0,0.3); }
-        .label { width: 30%; font-weight: bold; background-color: #f9f9f9; }
-        .value { width: 70%; }
+        body { font-family: "Segoe UI", Arial, sans-serif; color: #333; background-color: #f7f9fb; margin: 0; padding: 20px; }
+        .email-wrapper { background: #fff; border-radius: 10px; max-width: 720px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: hidden; }
+        .header { background-color: #3c72c8; color: #fff; padding: 25px 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .content { padding: 25px 35px; }
+        h2 { color: #3c72c8; font-size: 20px; margin-bottom: 10px; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; border-radius: 8px; overflow: hidden; }
+        td { padding: 10px 15px; border: 1px solid rgba(0,0,0,0.15); }
+        .label { width: 35%; font-weight: 600; background-color: #f2f5f9; }
+        .value { width: 65%; background: #fff; }
+        .footer { background-color: #f2f5f9; padding: 20px; text-align: center; font-size: 13px; color: #666; }
+        .icon { font-size: 18px; vertical-align: middle; margin-right: 6px; }
     </style>
 </head>
 <body>
-    <h1>New Booking on ' . $booking_data['website_title'] . '</h1>
+    <div class="email-wrapper">
+        <div class="header">
+            <h1>📩 New Booking Received</h1>
+        </div>
+        <div class="content">
+            <p>Dear Administrator,</p>
+            <p>🎉 You have received a new booking through <strong>' . esc_html($booking_data['website_title']) . '</strong>. Below are the details of the recent booking request:</p>
 
-    <table>
-        <tr>
-            <td class="label">Booking ID</td>
-            <td class="value">' . $booking_data['booking_id'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">First Name</td>
-            <td class="value">' . $booking_data['first_name'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">Last Name</td>
-            <td class="value">' . $booking_data['last_name'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">Booking Date</td>
-            <td class="value">' . $booking_data['booking_date'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">Email Address</td>
-            <td class="value">' . $booking_data['email'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">Phone Number</td>
-            <td class="value">' . $booking_data['phone'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">Hotel / Home Address</td>
-            <td class="value">' . $email_hotel_name . '</td>
-        </tr>
-        <tr>
-            <td class="label">Island</td>
-            <td class="value">Mahee Island</td>
-        </tr>
-        <tr>
-            <td class="label">Selected Test/Service</td>
-            <td class="value">' . $email_service . '</td>
-        </tr>
-        <tr>
-            <td class="label">Appointment Date</td>
-            <td class="value">' . $booking_data['test_date'] . '</td>
-        </tr>
-      
-        <tr>
-            <td class="label">Payment Currency</td>
-            <td class="value">€' . strtoupper($booking_data['grand_total_amount_to_be_charged']) . '</td>
-        </tr>
-    </table>
+            <table>
+                <tr>
+                    <td class="label">📋 Booking ID</td>
+                    <td class="value">' . esc_html($booking_data['booking_id']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">👤 First Name</td>
+                    <td class="value">' . esc_html($booking_data['first_name']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">👤 Last Name</td>
+                    <td class="value">' . esc_html($booking_data['last_name']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">📅 Booking Date</td>
+                    <td class="value">' . esc_html($booking_data['booking_date']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">✉️ Email Address</td>
+                    <td class="value">' . esc_html($booking_data['email']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">📞 Phone Number</td>
+                    <td class="value">' . esc_html($booking_data['phone']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">🏨 Hotel / Home Address</td>
+                    <td class="value">' . esc_html($email_hotel_name) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">🌴 Island</td>
+                    <td class="value">Mahee Island</td>
+                </tr>
+                <tr>
+                    <td class="label">💊 Selected Test/Service</td>
+                    <td class="value">' . esc_html($email_service) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">📆 Appointment Date</td>
+                    <td class="value">' . esc_html($booking_data['test_date']) . '</td>
+                </tr>
+                <tr>
+                    <td class="label">💳 Payment Amount</td>
+                    <td class="value">€' . esc_html(strtoupper($booking_data['grand_total_amount_to_be_charged'])) . '</td>
+                </tr>
+            </table>
+
+            <p>🔍 For complete details, visit your WordPress admin dashboard or check your bookings section on the website.</p>
+            <p>Thank you for using <strong>' . esc_html($booking_data['website_title']) . '</strong>.</p>
+        </div>
+        <div class="footer">
+            <p>© ' . date('Y') . ' ' . esc_html(get_bloginfo('name')) . '. All rights reserved.</p>
+            <p>📍 <a href="' . esc_url(home_url()) . '" style="color:#3c72c8; text-decoration:none;">Visit Website</a></p>
+        </div>
+    </div>
 </body>
 </html>
 ';
@@ -849,7 +869,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     #BookingFormEt input[type="text"]:focus,
     #BookingFormEt input[type="number"]:focus,
     #BookingFormEt select:focus,
-    #BookingFormEt textarea:focus {
+    #BookingFormEt textarea:focus #BookingFormEt button:focus {
       border: 1px solid #003f87;
       outline: none;
     }
@@ -2297,7 +2317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   </div>
 
                   <div class="summary-row">
-                    <span>Price</span>
+                    <span>Sub total</span>
                     <span>
                       <?php echo $currency_sign; ?> <span id="etlTestPrice">0</span>
                     </span>
