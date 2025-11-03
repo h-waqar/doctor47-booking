@@ -188,218 +188,280 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
 
-                // // Send Email to Admin
+                // @Send Email to Admin
 
+                // ============================================
+// PREPARE BOOKING DATA ARRAY
+// ============================================
+$booking_data = array(
+    'booking_id' => $random_id,
+    'first_name' => $first_name,
+    'last_name' => $last_name,
+    'full_name' => $first_name . ' ' . $last_name,
+    'email' => $email_address,
+    'phone' => $phone_number,
+    'booking_date' => $booking_date,
+    'test_date' => $test_date,
+    'time_slot' => $selected_time_slot,
+    'hotel' => $test_hotel,
+    'island' => $vaccination_island,
+    'service' => $selected_test,
+    'payment_status' => $payment_status,
+    'currency' => $selected_currency,
+    'website_title' => $website_title,
+    'website_url' => $website_url,
+    'domain' => $domain_name
+);
 
-                $to = 'charlotte.hawkes@globaloceaninvest.com';
-                $admin_one = 'doctor@doctor247.sc';
-                $admin_two = 'help@doctor247.dc';
+// ============================================
+// ADMIN NOTIFICATION EMAIL (Table Format)
+// ============================================
+$admin_message = '
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        h1 { color: #5e9ca0; font-size: 24px; }
+        table { border-collapse: collapse; width: 80%; margin: 20px 0; }
+        td { padding: 15px; border: 1px solid rgba(0,0,0,0.3); }
+        .label { width: 30%; font-weight: bold; background-color: #f9f9f9; }
+        .value { width: 70%; }
+    </style>
+</head>
+<body>
+    <h1>New Booking on ' . $booking_data['website_title'] . '</h1>
 
-                // $subject = 'You have new Booking on Seychelles Medical Services.';
-                $subject = 'You have new Booking on ' . $website_title . '.';
-
-
-                // $message = "Test Email from damsontech";
-
-                // $message = "$checkin $checkout - Number Of Peoples: $numberofpeople - quote_amount: $quote_amount";
-
-                $message = '<h1 style="color: #5e9ca0;">Booking detail on ' . $website_title . ' are following.</h1>
-
-        <table style="border-collapse: collapse; width: 71.4489%; height: 198px; border:1px solid rgba(0,0,0,0.3);" border="1">
-
-        <tbody>
-
-        <tr style="height: 18px;">
-
-        <td style="width: 21.875%; height: 18px; padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>First Name</strong></td>
-
-        <td style="width: 49.5739%; height: 18px; padding: 15px;border-color: rgba(0,0,0,0.3);">' . $first_name . ' </td>
-
+    <table>
+        <tr>
+            <td class="label">Booking ID</td>
+            <td class="value">' . $booking_data['booking_id'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Last Name</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $last_name . '</td>
-
+        <tr>
+            <td class="label">First Name</td>
+            <td class="value">' . $booking_data['first_name'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Booking Date</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $booking_date . '</td>
-
+        <tr>
+            <td class="label">Last Name</td>
+            <td class="value">' . $booking_data['last_name'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Email Address</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $email_address . '</td>
-
+        <tr>
+            <td class="label">Booking Date</td>
+            <td class="value">' . $booking_data['booking_date'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Hotel / Home Address</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $test_hotel . '</td>
-
+        <tr>
+            <td class="label">Email Address</td>
+            <td class="value">' . $booking_data['email'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Payment Status</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $payment_status . '</td>
-
+        <tr>
+            <td class="label">Phone Number</td>
+            <td class="value">' . $booking_data['phone'] . '</td>
         </tr>
-
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Payment Currency</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $selected_currency . '</td>
-
+        <tr>
+            <td class="label">Hotel / Home Address</td>
+            <td class="value">' . $booking_data['hotel'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Vaccination Island</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $vaccination_island . '</td>
-
+        <tr>
+            <td class="label">Island</td>
+            <td class="value">' . $booking_data['island'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Test Date</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $test_date . '</td>
-
+        <tr>
+            <td class="label">Selected Test/Service</td>
+            <td class="value">' . $booking_data['service'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Test Hotel</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $test_hotel . '</td>
-
+        <tr>
+            <td class="label">Appointment Date</td>
+            <td class="value">' . $booking_data['test_date'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Selected Test</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $selected_test . '</td>
-
+        <tr>
+            <td class="label">Time Slot</td>
+            <td class="value">' . $booking_data['time_slot'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Selected Time Slot</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $selected_time_slot . '</td>
-
+        <tr>
+            <td class="label">Payment Status</td>
+            <td class="value">' . $booking_data['payment_status'] . '</td>
         </tr>
-
-        <tr style="height: 18px;padding: 15px;">
-
-        <td style="width: 21.875%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);"><strong>Phone Number</strong></td>
-
-        <td style="width: 49.5739%; height: 18px;padding: 15px;border-color: rgba(0,0,0,0.3);">' . $phone_number . '</td>
-
+        <tr>
+            <td class="label">Payment Currency</td>
+            <td class="value">' . strtoupper($booking_data['currency']) . '</td>
         </tr>
+    </table>
+</body>
+</html>
+';
 
-        </tbody>
+// ============================================
+// CUSTOMER CONFIRMATION EMAIL (Clean Format)
+// ============================================
+$customer_message = '
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .company-name {
+            font-weight: bold;
+        }
+        .booking-section li {
+            margin: 12px 0;
+        }
+        .tagline {
+            font-style: italic;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
 
-        </table>';
+    <div class="greeting">
+        <p>Dear ' . $booking_data['full_name'] . ',</p>
+    </div>
 
-                $headers = array('Content-Type: text/html; charset=UTF-8', 'From: ' . $website_title . ' <doctor@doctor247.sc>');
+    <div class="intro">
+        <p>Thank you for choosing <span class="company-name">Seychelles Medical Services & Doctor247</span>.</p>
 
-                wp_mail($to, $subject, $message, $headers);
-                wp_mail($admin_one, $subject, $message, $headers);
-                wp_mail($admin_two, $subject, $message, $headers);
+        <p>Your doctor appointment has been successfully booked. Below are your booking details:</p>
+    </div>
 
-                // Email code ends
+    <div class="booking-section">
+        <h3>Booking Details:</h3>
+        <ul>
+            <li><strong>Booking ID:</strong> #' . $booking_data['booking_id'] . '</li>
+            <li><strong>Patient Name:</strong> ' . $booking_data['full_name'] . '</li>
+            <li><strong>Service Type:</strong> ' . $booking_data['service'] . '</li>
+            <li><strong>Doctor Name:</strong> [To be assigned]</li>
+            <li><strong>Date & Time:</strong> ' . $booking_data['test_date'] . ', ' . $booking_data['time_slot'] . '</li>
+            <li><strong>Location:</strong> ' . $booking_data['hotel'] . ' (' . $booking_data['island'] . ')</li>
+            <li><strong>Consultation Fee:</strong> ' . strtoupper($booking_data['currency']) . '</li>
+        </ul>
+    </div>
 
-                // // Send Email to Customer
+    <div class="info-text">
+        <p>Our medical representative will contact you shortly to confirm the visit or provide the online consultation link.</p>
+    </div>
 
-                $to = $email_address;
+    <div class="contact-info">
+        <p>If you need to make any changes or cancel your booking, please contact us at:</p>
+        <div class="contact-item">📞 <strong>' . $booking_data['phone'] . '</strong></div>
+        <div class="contact-item">✉️ <strong>doctor@doctor247.sc</strong></div>
+    </div>
 
-                $subject = 'Booking confirmation ' . $website_title;
+    <div class="info-text">
+        <p>We appreciate your trust in us and wish you a speedy recovery.</p>
+    </div>
 
-                // $message = "Test Email from damsontech";
+    <div class="footer">
+        <p>Warm regards,</p>
+        <p><strong>Seychelles Medical Services & Doctor247 Team</strong></p>
+        <p class="tagline">Your Health, Our Priority</p>
+    </div>
+</body>
+</html>
+';
 
-                // $message = "$checkin $checkout - Number Of Peoples: $numberofpeople - quote_amount: $quote_amount";
+// ============================================
+// SEND EMAILS
+// ============================================
+$headers = array(
+    'Content-Type: text/html; charset=UTF-8',
+    'From: ' . $booking_data['website_title'] . ' <doctor@doctor247.sc>'
+);
 
-                $pdfHtml = '<table align="center" border="0" cellspacing="0" style="border-collapse:collapse; height:2px; width:100%">
-		<tbody>
-		<tr>
-			<td rowspan="6" style="width:50%">&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" src="./pdf_image.jpg" style="height:66px; width:188px" /></td>
-		</tr>
-		<tr>
-			<td style="text-align:right; width:50%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>' . $website_title . ' &nbsp; </strong></span></span></td>
-		</tr>
-		<tr>
-			<td style="text-align:right; width:50%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px">&nbsp;&nbsp; Blue Building, Commercial House&nbsp;&nbsp;&nbsp; </span></span></td>
-		</tr>
-		<tr>
-			<td style="text-align:right; width:50%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px">1 Eden Island, Mahe, Seychelles&nbsp;&nbsp;&nbsp;</span></span></td>
-		</tr>
-		<tr>
-			<td style="text-align:right; width:50%">&nbsp;</td>
-		</tr>
-	</tbody>
+// Send admin notifications
+$admin_subject = 'New Booking on ' . $booking_data['website_title'];
+$admin_emails = array(
+    // @mails
+    // 'charlotte.hawkes@globaloceaninvest.com',
+    // 'doctor@doctor247.sc',
+    // 'help@doctor247.dc'
+    'badod20680@dwakm.com'
+);
+
+foreach ($admin_emails as $admin_email) {
+    wp_mail($admin_email, $admin_subject, $admin_message, $headers);
+}
+
+// Send customer confirmation
+$customer_subject = '🩺 Booking Confirmation — Seychelles Medical Services & Doctor247';
+wp_mail($booking_data['email'], $customer_subject, $customer_message, $headers);
+
+// ============================================
+// EXISTING PDF GENERATION CODE
+// ============================================
+// Your existing PDF code continues below...
+$pdfHtml = '<table align="center" border="0" cellspacing="0" style="border-collapse:collapse; height:2px; width:100%">
+    <tbody>
+    <tr>
+        <td rowspan="6" style="width:50%">&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" src="./pdf_image.jpg" style="height:66px; width:188px" /></td>
+    </tr>
+    <tr>
+        <td style="text-align:right; width:50%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>' . $booking_data['website_title'] . ' &nbsp; </strong></span></span></td>
+    </tr>
+    <tr>
+        <td style="text-align:right; width:50%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px">&nbsp;&nbsp; Blue Building, Commercial House&nbsp;&nbsp;&nbsp; </span></span></td>
+    </tr>
+    <tr>
+        <td style="text-align:right; width:50%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px">1 Eden Island, Mahe, Seychelles&nbsp;&nbsp;&nbsp;</span></span></td>
+    </tr>
+    <tr>
+        <td style="text-align:right; width:50%">&nbsp;</td>
+    </tr>
+</tbody>
 </table>
 
 <p style="text-align:center"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:18px"><span style="color:#27ae60"><strong>APPOINTMENT CONFIRMATION</strong></span></span></span></p>
 <table cellpadding="13" cellspacing="0" style="border-collapse:collapse; width:100%">
-	<tbody>
-		<tr>
-			<td style="width:50%"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">NAME</span></strong></td>
-			<td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $first_name . ' ' . $last_name . '</span></td>
-		</tr>
+    <tbody>
         <tr>
-			<td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">BOOKING DATE</span></strong></td>
-			<td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_date . '</span></td>
-		</tr>
-		<tr>
-			<td style="width:50%"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">EMAIL</span></strong></td>
-			<td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $email_address . '</span></td>
-		</tr>
+            <td style="width:50%"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">NAME</span></strong></td>
+            <td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['full_name'] . '</span></td>
+        </tr>
         <tr>
-			<td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">TEST HOTEL</span></strong></td>
-			<td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $test_hotel . '</span></td>
-		</tr>
-		<tr>
-			<td style="width:50%"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">PHONE</span></strong></td>
-			<td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $phone_number . '</span></td>
-		</tr>
-
+            <td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">BOOKING DATE</span></strong></td>
+            <td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['booking_date'] . '</span></td>
+        </tr>
         <tr>
-			<td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">SELECTED TEST</span></strong></td>
-			<td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $selected_test . '</span></td>
-		</tr>
-		<tr>
-			<td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif"><strong>TIME SLOT</strong></span></td>
-			<td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $selected_time_slot . '</span></td>
-		</tr>
-		<tr>
-			<td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">PAYMENT</span></strong></td>
-			<td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $payment_status . '</span></td>
-		</tr>
-	</tbody>
+            <td style="width:50%"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">EMAIL</span></strong></td>
+            <td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['email'] . '</span></td>
+        </tr>
+        <tr>
+            <td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">TEST HOTEL</span></strong></td>
+            <td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['hotel'] . '</span></td>
+        </tr>
+        <tr>
+            <td style="width:50%"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">PHONE</span></strong></td>
+            <td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['phone'] . '</span></td>
+        </tr>
+        <tr>
+            <td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">SELECTED TEST</span></strong></td>
+            <td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['service'] . '</span></td>
+        </tr>
+        <tr>
+            <td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif"><strong>TIME SLOT</strong></span></td>
+            <td style="width:50%"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['time_slot'] . '</span></td>
+        </tr>
+        <tr>
+            <td style="width:50%;background-color:#eeeeee;"><strong><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">PAYMENT</span></strong></td>
+            <td style="width:50%;background-color:#eeeeee;"><span style="font-size:14px;font-family:Arial,Helvetica,sans-serif">' . $booking_data['payment_status'] . '</span></td>
+        </tr>
+    </tbody>
 </table>
 
 <p>&nbsp;</p>
 
 <p><span style="font-family:Arial,Helvetica,sans-serif"><strong>Dear Customer,</strong></span></p>
 
-<p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">Thank you for booking with us.&nbsp; Any assistance please email us on doctor@doctor247.sc or call us/whatsapp us on tel:+248 257 8899</span></span></p>
+<p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">Thank you for booking with us. Any assistance please email us on doctor@doctor247.sc or call us/whatsapp us on tel:+248 257 8899</span></span></p>
 
 <p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">Please present a copy of this appointment letter along with your original passport/national identity document for verification purposes during your sample collection.</span></span></p>
 
@@ -409,55 +471,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px"><strong>*</strong> It is recommended that you consult your Doctor/Physician if you need interpretation of your test result</span></span></p>
 
-<p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px"><strong>*</strong> ' . $website_title . ' assumes no liability towards any delays in processing your sample.</span></span></p>
+<p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px"><strong>*</strong> ' . $booking_data['website_title'] . ' assumes no liability towards any delays in processing your sample.</span></span></p>
 
-<p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px"><strong>*</strong> Maximum liability of ' . $website_title . ' should not exceed the amount charged by the service provider for the particular test(s)</span></span></p>
+<p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px"><strong>*</strong> Maximum liability of ' . $booking_data['website_title'] . ' should not exceed the amount charged by the service provider for the particular test(s)</span></span></p>
 
 <p><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:11px"><strong>*</strong> This booking is non-refundable as per terms and conditions applied.</span></span></p>
 
-<p><span style="font-family:Arial,Helvetica,sans-serif"><strong>Email </strong>-<a href="&lt;a href=&quot;mailto: doctor@doctor247.sc&quot;&gt;doctor247.sc&lt;/a&gt;"> doctor@doctor247.sc</a></span></p>
+<p><span style="font-family:Arial,Helvetica,sans-serif"><strong>Email </strong>- <a href="mailto:doctor@doctor247.sc">doctor@doctor247.sc</a></span></p>
 
 <table cellpadding="10" cellspacing="0" style="border-collapse:collapse; width:100%">
-	<tbody>
-		<tr>
-			<td style="text-align:center; width:50%"><span style="font-size:20px"><strong>' . $domain_name . '</strong></span></td>
-			<td style="text-align:center; width:50%"><span style="font-size:18px"><strong>' . $website_url . '</strong></span></td>
-		</tr>
-	</tbody>
+    <tbody>
+        <tr>
+            <td style="text-align:center; width:50%"><span style="font-size:20px"><strong>' . $booking_data['domain'] . '</strong></span></td>
+            <td style="text-align:center; width:50%"><span style="font-size:18px"><strong>' . $booking_data['website_url'] . '</strong></span></td>
+        </tr>
+    </tbody>
 </table>
 ';
 
-                $message = '
+// Generate PDF
+$options = new Options;
+$options->setChroot(__DIR__);
+$options->setIsRemoteEnabled(true);
+$dompdf = new Dompdf($options);
+$dompdf->setPaper("A4", "portrait");
+$dompdf->loadHtml($pdfHtml);
+$dompdf->render();
+$output = $dompdf->output();
+file_put_contents(__DIR__ . "/service_required.pdf", $output);
 
-        <p style="color: #000000;">Dear Valued Customer, for any assistance please write to us on <a href="mailto:doctor@doctor247.sc">doctor@doctor247.sc</a> or call us/whatsapp us on <a href="tel:+2482578899">tel:+2482578899</a></p>
-        <p style="color: #000000;">Please present a copy of this appointment letter along with the original passport/national identity document for verification purposes during your sample collection.</p>
-        <p style="color: #000000;">Your satisfaction is our guarantee.</p>
-        <p style="color: #000000;">Thank you for choosing us as your trusted healthcare service provider.</p>
-        <p style="color: #000000;"><i><b>Important Notes :</b></i></p>
-        <p style="color: #000000;"><i>* It is recommended that you consult your Doctor/Physician for interpretation of test result</i></p>
-        <p style="color: #000000;"><i>* '.$website_title.' assumes no liability towards any delays</i></p>
-        <p style="color: #000000;"><i>* Maximum liability of '.$website_title.' should not exceed the amount charged by the service provider for the particular test(s)</i></p>
-        <p style="color: #000000;"><i>* The booking is non-refundable as per terms and conditions applied.</i></p>
-        <p style="color: #000000;"><i><span style="color:#007723;">Email</span> - <a href="mailto:doctor@doctor247.sc">doctor@doctor247.sc</a> <a href="https://www.doctor247.sc">www.doctor247.sc</a></i></p>';
+// Send PDF attachment email
+$pdf_message = '
+<p style="color: #000000;">Dear Valued Customer, for any assistance please write to us on <a href="mailto:doctor@doctor247.sc">doctor@doctor247.sc</a> or call us/whatsapp us on <a href="tel:+2482578899">tel:+2482578899</a></p>
+<p style="color: #000000;">Please present a copy of this appointment letter along with the original passport/national identity document for verification purposes during your sample collection.</p>
+<p style="color: #000000;">Your satisfaction is our guarantee.</p>
+<p style="color: #000000;">Thank you for choosing us as your trusted healthcare service provider.</p>
+<p style="color: #000000;"><i><b>Important Notes :</b></i></p>
+<p style="color: #000000;"><i>* It is recommended that you consult your Doctor/Physician for interpretation of test result</i></p>
+<p style="color: #000000;"><i>* ' . $booking_data['website_title'] . ' assumes no liability towards any delays</i></p>
+<p style="color: #000000;"><i>* Maximum liability of ' . $booking_data['website_title'] . ' should not exceed the amount charged by the service provider for the particular test(s)</i></p>
+<p style="color: #000000;"><i>* The booking is non-refundable as per terms and conditions applied.</i></p>
+<p style="color: #000000;"><i><span style="color:#007723;">Email</span> - <a href="mailto:doctor@doctor247.sc">doctor@doctor247.sc</a> <a href="https://www.doctor247.sc">www.doctor247.sc</a></i></p>
+';
 
-
-                $headers = array('Content-Type: text/html; charset=UTF-8', 'From: '.$website_title.' <doctor@doctor247.sc>');
-                //ADDED
-                $options = new Options;
-                $options->setChroot(__DIR__);
-                $options->setIsRemoteEnabled(true);
-                $dompdf = new Dompdf($options);
-                $dompdf->setPaper("A4", "portrait");
-                $dompdf->loadHtml($pdfHtml);
-                $dompdf->render();
-                // $dompdf->addInfo("Title", "$website_title <doctor@doctor247.sc>");
-                $output = $dompdf->output();
-                file_put_contents(__DIR__ . "/service_required.pdf", $output);
-
-                $attachments = (__DIR__ . '/service_required.pdf');
-
-                //END
-                wp_mail($to, $subject, $message, $headers, $attachments);
+$attachments = (__DIR__ . '/service_required.pdf');
+wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website_title'], $pdf_message, $headers, $attachments);
 
                 // Email code ends
 
@@ -1942,7 +2000,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- <h6 id="labelDate">Which date would you like us to perform your Covid 19 Test on?</h6> -->
             <div class="input-wrapper w-100" style="padding: 0; width: 100%">
               <input autocomplete="off" type="text" id="testDate" name="test_date" placeholder="Selected test date"
-                value="<?php echo $selected_test_date; ?>" onchange="get_time_slots(this.value)">
+                value="<?php echo $selected_test_date; ?>" onchange="get_bs_time_slots(this.value)">
             </div>
             <!-- <div class="input-wrapper w-100" style="padding: 0; width: 100%; display:none;">
                                 <select id="testLocation" name="test_location">
@@ -2743,7 +2801,7 @@ function submitTheForm(element) {
   form.submit();
 }
 $(document).ready(function() {
-  get_time_slots('<?php echo date('Y-m-d'); ?>');
+  get_bs_time_slots('<?php echo date('Y-m-d'); ?>');
 
 
 
@@ -3348,7 +3406,7 @@ function nextPrev(n) {
   if (n == 1) {
     if (!valForm()) {
       // @validate
-      // return false;
+      return false;
     }
   }
 
