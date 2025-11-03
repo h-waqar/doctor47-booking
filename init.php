@@ -19,7 +19,7 @@ require __DIR__ . "/vendor/autoload.php";
 $website_title = "Doctor247";
 
 // this true means that plugin is underdevelopment enviroment do not use real api keys and do not send mail to actual customer etc
-define("DBP_TEST_ENV", true);
+define("DBP_TEST_ENV", false);
 
 
 

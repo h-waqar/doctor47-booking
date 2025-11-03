@@ -1,0 +1,11 @@
+1) At this moment the form is not using ajax so if payment will fail the customer will need to fillout the whole form
+2) plugin is using legacy payment API (not the latest red flag credits card sumbit to server)
+3) the prices should dynamic and easily changeable from admin
+4) On booking their is mainly one information that we are repeating price + service we can display some more information i.e selected island customer location etc so he can confirm what selection he makes + summary will look good 
+5) on Mobile device left side spacing and right side spacing in the form not equalant
+6) Need to add strict validation on *Contact Number* Input field
+7) Like there is small description in first label *Personal Information* there should be also same description in other steps for a smooth UX
+8) On Card input fields there are no icons at the moment like medical protection booking plugin 
+9) On step two when it select a wrong service it display JS alert
+There are some points i personally noticed 
+

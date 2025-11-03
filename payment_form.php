@@ -50,10 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cardType = test_input($_POST['cardType']);
     $grand_total_amount_to_be_charged = test_input($_POST['grand_total_amount_to_be_charged']);
 
-
-
-
-
     $random_id = rand();
 
 
@@ -110,6 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
       $request->charge($grand_total_amount_to_be_charged);
+      // $request->charge(1);
     } catch (Exception $exp) {
       $booking_status = "false";
       $error .= $exp->getMessage();
@@ -366,9 +363,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="intro">
+
+
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:615px" align="center">
+                              <tbody>
+                                <tr>
+                                  <td role="modules-container" style="padding:0;color:#000;text-align:left" bgcolor="#FFFFFF" width="100%" align="left">
+
+
+
+
+
+                                    <table role="module" border="0" cellpadding="0" cellspacing="0" width="100%" style="display:none!important;opacity:0;color:transparent;height:0;width:0">
+                                      <tbody><tr><td role="module-content"><p>Thank you for purchasing Medical Protection with Seychelles Medical</p></td></tr></tbody>
+                                    </table>
+
+                                    <table role="module" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout:fixed">
+                                      <tbody><tr><td style="font-size:6px;line-height:10px;padding:18px 0" valign="top" align="center">
+                                        <img border="0" style="display:block;width:100%;height:auto" width="615" alt="Medical Protection" src="https://cdn.mcauto-images-production.sendgrid.net/2be3c6b0d2805038/1977b2b5-9a58-4053-a3a0-02d2b3c5d87c/550x64.jpg">
+                                      </td></tr></tbody>
+                                    </table>
+
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+
+
         <p>Thank you for choosing <span class="company-name">' . esc_html(get_bloginfo('name')) . '</span>.</p>
 
         <p>Your doctor appointment has been successfully booked. Below are your booking details:</p>
+        <p>Please call +248 257 8899 to confirm your booking with ' . esc_html(get_bloginfo('name')) . '</p>
     </div>
 
     <div class="booking-section">
@@ -390,7 +416,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="contact-info">
         <p>If you need to make any changes or cancel your booking, please contact us at:</p>
-        <div class="contact-item">📞 <strong>' . $booking_data['phone'] . '</strong></div>
+        <div class="contact-item">📞 <strong>+248 257 8899</strong></div>
         <div class="contact-item">✉️ <strong>' . $admin_email . '</strong></div>
     </div>
 
@@ -422,7 +448,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!DBP_TEST_ENV) {
           $admin_emails = array(
             // @mails
-            // 'charlotte.hawkes@globaloceaninvest.com',
+            'charlotte.hawkes@globaloceaninvest.com',
             // 'doctor@doctor247.sc',
             // 'help@doctor247.dc'
           );
@@ -660,6 +686,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     .bs-navmenu ul li {
       padding: 10px 0 10px 18px !important;
+      font-size: 1rem;
+      font-family: 'Montserrat';
     }
 
     .bs-navmenu ul li a {
@@ -672,6 +700,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       width: 200px !important;
       display: block !important;
       cursor: context-menu !important;
+      font-family: 'Montserrat';
     }
 
     .bs-navmenu ul li a::before {
@@ -2106,7 +2135,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <!-- <h6 id="labelDate">Which date would you like us to perform your Covid 19 Test on?</h6> -->
               <div class="input-wrapper w-100" style="padding: 0; width: 100%">
                 <input autocomplete="off" type="text" id="testDate" name="test_date" placeholder="Selected test date"
-                  value="<?php echo $selected_test_date; ?>" onchange="get_bs_time_slots(this.value)">
+                  value="<?php echo $selected_test_date; ?>">
+                <!-- onchange="get_bs_time_slots(this.value)" -->
               </div>
               <!-- <div class="input-wrapper w-100" style="padding: 0; width: 100%; display:none;">
                                 <select id="testLocation" name="test_location">
@@ -2285,7 +2315,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="text-available-slots" id="titleTimeSlots">
               <div class="sec_heading">
                 <p class="bs-label">Available Time Slots <span
-                    id="timeSlotDate"><?php echo date('d M-Y', strtotime($selected_test_date)); ?></span> </p>
+                    id="timeSlotDate"><?php echo date('d M-Y', strtotime($selected_test_date)); ?></span></p>
               </div><span id="errorTimeSlot" class="text-danger hide">(Please select a time slot)</span>
             </div>
             <div class="slot-row" id="wrapTimeSlots">
@@ -2709,15 +2739,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         {
 
-          "name": "1 Hour In Person Call Out (Day) - (€375)",
+          "name": "1 Hour In Person Call Out (Day) - (€275)",
 
-          "price": 375
+          "price": 275
 
         }, {
 
-          "name": "1 Hour In Person Call Out (Night) - (€475)",
+          "name": "1 Hour In Person Call Out (Night) - (€375)",
 
-          "price": 475
+          "price": 375
 
         }
 
@@ -2907,7 +2937,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     form.submit();
   }
   $(document).ready(function() {
-    get_bs_time_slots('<?php echo date('Y-m-d'); ?>');
+    //get_bs_time_slots('<?php echo date('Y-m-d'); ?>');
 
 
 
