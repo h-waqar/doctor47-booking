@@ -686,6 +686,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     font-size: var(--bs-heading);
     font-weight: 700;
     padding-bottom: 15px;
+    font-size: 40px;
+    font-family: 'Montserrat';
+    font-weight: bold;
   }
 
   /* .sec_heading h4:after {

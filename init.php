@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Plugin Name: Custom CyberSource
+ * Plugin Name: Doctor Booking
  * Plugin URI:
  * Description: Create online booking form using cyber source payment gateway api
  * Version: 1.0
