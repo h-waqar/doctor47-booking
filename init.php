@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Doctor Booking
+ * Plugin Name: Doctor Booking 2.0
  * Plugin URI:
  * Description: Create online booking form using cyber source payment gateway api
  * Version: 1.0
@@ -828,7 +828,7 @@ function custom_cybersource_certificate_mail()
         $attachments = (__DIR__ . "/pdfs/file" . $booking_id . ".pdf");
 
         //END
-        wp_mail($to, $subject, $message, $headers, $attachments);
+        // wp_mail($to, $subject, $message, $headers, $attachments);
 
         $response['success'] =  true;
         $response['message'] = "Email has been sent successfully.";

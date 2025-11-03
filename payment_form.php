@@ -299,6 +299,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 ';
 
+
+
+        $service_full = $booking_data['service'];
+        $service_parts = explode(',', $service_full);
+        $service_clean = trim($service_parts[0]); // Take only text before first comma
+        $admin_email = get_option('admin_email');
+
         // ============================================
         // CUSTOMER CONFIRMATION EMAIL (Clean Format)
         // ============================================
@@ -320,7 +327,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: bold;
         }
         .booking-section li {
-            margin: 12px 0;
+            margin: 5px 0;
         }
         .tagline {
             font-style: italic;
@@ -336,7 +343,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="intro">
-        <p>Thank you for choosing <span class="company-name">Seychelles Medical Services & Doctor247</span>.</p>
+        <p>Thank you for choosing <span class="company-name">' . esc_html(get_bloginfo('name')) . '</span>.</p>
 
         <p>Your doctor appointment has been successfully booked. Below are your booking details:</p>
     </div>
@@ -346,11 +353,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul>
             <li><strong>Booking ID:</strong> #' . $booking_data['booking_id'] . '</li>
             <li><strong>Patient Name:</strong> ' . $booking_data['full_name'] . '</li>
-            <li><strong>Service Type:</strong> ' . $booking_data['service'] . '</li>
+            <li><strong>Service Type:</strong> ' .  esc_html($service_clean) . '</li>
             <li><strong>Doctor Name:</strong> [To be assigned]</li>
             <li><strong>Date & Time:</strong> ' . $booking_data['test_date'] . ', ' . $booking_data['time_slot'] . '</li>
-            <li><strong>Location:</strong> ' . $booking_data['hotel'] . ' (' . $booking_data['island'] . ')</li>
-            <li><strong>Consultation Fee:</strong> ' . strtoupper($booking_data['currency']) . '</li>
+            <li><strong>Location:</strong> ' . $booking_data['hotel'] . ')</li>
+            <li><strong>Consultation Fee:</strong> €' . strtoupper($booking_data['grand_total_amount_to_be_charged']) . '</li>
         </ul>
     </div>
 
@@ -361,7 +368,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="contact-info">
         <p>If you need to make any changes or cancel your booking, please contact us at:</p>
         <div class="contact-item">📞 <strong>' . $booking_data['phone'] . '</strong></div>
-        <div class="contact-item">✉️ <strong>doctor@doctor247.sc</strong></div>
+        <div class="contact-item">✉️ <strong>' . $admin_email . '</strong></div>
     </div>
 
     <div class="info-text">
@@ -370,7 +377,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="footer">
         <p>Warm regards,</p>
-        <p><strong>Seychelles Medical Services & Doctor247 Team</strong></p>
+        <p><strong>' . esc_html(get_bloginfo('name')) . ' Team</strong></p>
         <p class="tagline">Your Health, Our Priority</p>
     </div>
 </body>
@@ -409,7 +416,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Send customer confirmation
-        $customer_subject = '🩺 Booking Confirmation — Seychelles Medical Services & Doctor247';
+        $customer_subject = '🩺 Booking Confirmation — ' . get_bloginfo('name');
         wp_mail($booking_data['email'], $customer_subject, $customer_message, $headers);
 
         // ============================================
@@ -532,7 +539,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ';
 
         $attachments = (__DIR__ . '/service_required.pdf');
-        wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website_title'], $pdf_message, $headers, $attachments);
+        // wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website_title'], $pdf_message, $headers, $attachments);
 
         // Email code ends
 
