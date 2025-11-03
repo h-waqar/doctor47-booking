@@ -3,6 +3,7 @@
 $website_title = "Doctor247";
 $domain_name = "doctors247.sc";
 $website_url = "WWW.DOCTORS247.SC";
+$currency = "";
 //ADDED
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -115,6 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
+    error_log(print_r($request, true));
 
 
     if ($request->response && $request->response->resMessage) {
@@ -123,9 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $booking_status = false;
       } else {
 
-
-
-
+        $cybersource_payment_id =  $request->response->requestID;
 
         //***************************Payment Successful **********************/
         /**
@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           'test_name' => $selected_test,
           'test_time' => $selected_time_slot,
           'phone_number' => $phone_number,
-          'booking_id' => $random_id,
+          'booking_id' => $cybersource_payment_id,
         );
         // selected_hotel
 
@@ -195,11 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           update_post_meta($available_slots_post_id, $meta_key, $meta_value);
         }
 
-        $hotel_name = explode(',', $booking_data['hotel'])[0];
-        $email_hotel_name = trim($hotel_name); // remove extra spaces
 
-        $hotel_name = explode(',', $booking_data['service'])[0];
-        $email_service = trim($hotel_name); // remove extra spaces
 
 
         // @Send Email to Admin
@@ -226,6 +222,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           'website_url' => $website_url,
           'domain' => $domain_name
         );
+
+
+        $hotel_name = explode(',', $booking_data['hotel'])[0];
+        $email_hotel_name = trim($hotel_name); // remove extra spaces
+
+        $hotel_name = explode(',', $booking_data['service'])[0];
+        $email_service = trim($hotel_name); // remove extra spaces
+
 
         // ============================================
         // ADMIN NOTIFICATION EMAIL (Table Format)
@@ -302,7 +306,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </tr>
                 <tr>
                     <td class="label">💳 Payment Amount</td>
-                    <td class="value">€' . esc_html(strtoupper($booking_data['grand_total_amount_to_be_charged'])) . '</td>
+                    <td class="value">€' . $grand_total_amount_to_be_charged . '</td>
                 </tr>
             </table>
 
@@ -376,7 +380,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><strong>Doctor Name:</strong> [To be assigned]</li>
             <li><strong>Date & Time:</strong> ' . $booking_data['test_date'] . ', ' . $booking_data['time_slot'] . '</li>
             <li><strong>Location:</strong> ' . $booking_data['hotel'] . ')</li>
-            <li><strong>Consultation Fee:</strong> €' . strtoupper($booking_data['grand_total_amount_to_be_charged']) . '</li>
+            <li><strong>Consultation Fee:</strong> €' . $grand_total_amount_to_be_charged . '</li>
         </ul>
     </div>
 
@@ -2264,7 +2268,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <?php } else { ?>
                   <?php  } ?>
 
-                  <?php if ($_GET['dc']) { ?>
+                  <?php if (isset($_GET['dc'])) { ?>
                     <option value="Late Night Call, 500">Doctor Book</option>
                   <?php } ?>
 
