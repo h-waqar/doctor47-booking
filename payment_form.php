@@ -195,6 +195,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           update_post_meta($available_slots_post_id, $meta_key, $meta_value);
         }
 
+        $hotel_name = explode(',', $booking_data['hotel'])[0];
+        $email_hotel_name = trim($hotel_name); // remove extra spaces
+
+        $hotel_name = explode(',', $booking_data['service'])[0];
+        $email_service = trim($hotel_name); // remove extra spaces
+
 
         // @Send Email to Admin
 
@@ -268,31 +274,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </tr>
         <tr>
             <td class="label">Hotel / Home Address</td>
-            <td class="value">' . $booking_data['hotel'] . '</td>
+            <td class="value">' . $email_hotel_name . '</td>
         </tr>
         <tr>
             <td class="label">Island</td>
-            <td class="value">' . $booking_data['island'] . '</td>
+            <td class="value">Mahee Island</td>
         </tr>
         <tr>
             <td class="label">Selected Test/Service</td>
-            <td class="value">' . $booking_data['service'] . '</td>
+            <td class="value">' . $email_service . '</td>
         </tr>
         <tr>
             <td class="label">Appointment Date</td>
             <td class="value">' . $booking_data['test_date'] . '</td>
         </tr>
-        <tr>
-            <td class="label">Time Slot</td>
-            <td class="value">' . $booking_data['time_slot'] . '</td>
-        </tr>
-        <tr>
-            <td class="label">Payment Status</td>
-            <td class="value">' . $booking_data['payment_status'] . '</td>
-        </tr>
+      
         <tr>
             <td class="label">Payment Currency</td>
-            <td class="value">' . strtoupper($booking_data['currency']) . '</td>
+            <td class="value">€' . strtoupper($booking_data['grand_total_amount_to_be_charged']) . '</td>
         </tr>
     </table>
 </body>
@@ -865,7 +864,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .container {
       border-radius: 5px;
       background-color: transparent;
-      padding: 70px;
+
     }
 
     #BookingFormEt .col-25 {
@@ -1461,7 +1460,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
 
       .container {
-        padding: 15px;
+        padding: 5px;
       }
 
       form input {
@@ -1710,6 +1709,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin-top: 40px;
         font-size: 36px;
       }
+
+      #sidebar_ProgressBar {
+        display: none;
+      }
     }
 
     .summary_table td {
@@ -1732,6 +1735,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       color: rgba(0, 0, 0, 0.8) !important;
     }
 
+
     /* .elementor-element-populated {
             background-color: #edf3fa;
         } */
@@ -1752,7 +1756,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                           echo "test ";
                                                         } ?>">
   <!-- @TODO  -->
-  <div class="container px-4 d-flex" id="BookingFormEt" style="">
+  <div class="container d-flex" id="BookingFormEt" style="">
     <?php if (isset($success) && $success != null) { ?>
 
 
