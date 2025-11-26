@@ -41,79 +41,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selected_test = test_input($_POST['selected_test']);
         $selected_time_slot = test_input($_POST['selected_time_slot']);
 
-        $selected_currency = test_input($_POST['selected_currency']);
-        $card_cvv = test_input($_POST['selected_currency']);
-        // get payment information
-        $accountNumber = test_input($_POST['accountNumber']);
-        $expirationMonth = test_input($_POST['expirationMonth']);
-        $expirationYear = test_input($_POST['expirationYear']);
-        $cardType = test_input($_POST['cardType']);
+        $selected_currency = !empty($_POST['selected_currency']) ? strtoupper(test_input($_POST['selected_currency'])) : 'USD';
+        
+        // Removed legacy card fields (accountNumber, expirationMonth, expirationYear, cardType)
+        // as they are no longer submitted to the server.
+        
         $grand_total_amount_to_be_charged = test_input($_POST['grand_total_amount_to_be_charged']);
 
-
-
-
-
         $random_id = rand();
-
-
+        $error = ""; // Initialize error variable
 
         // etl cyber source integration started
-        require_once dirname(__FILE__) . "/lib/cybersource/cybersource.php";
-        if ($selected_currency == "euro") { //if currency if euro
-            //new site keys $request = new CyberSource("absa_seytravel_eur_0981357", "jpwlcXvYQ0qlY0j8qqgYHIBDsqKyODJLB/zZg3Z61+Tpj5yG2rzNuKjnAnKiSYQ34J99B6xogm12uxYZAlrobUiSZ3X/26x5ll5kYqMWbsRWaMS78ShJTJIK5v/6+MjDuV4y/V53aYsthV2JGzWkPWx8SKQPr/pYmaddifG482SC+EY6iLyvcn7nSm6/2XiNRwdurvrmPzEImT8OGGukDxGAXVSbZ3Pfh5PtcFjzZVx0Rt8ms7qFOdalFkVZ684tfS3Nlk1d15vdQjV6odLuWmKFKYUpBrZXf4Q/v5DCj/h0/89it3Emerfui9mjix2y8kpTEV9sCsYw7Rkf6jeFvw==", "Live");
+        // require_once dirname(__FILE__) . "/lib/cybersource/cybersource.php";
+        
+        // NEW INTEGRATION
+        $client = new Sdv_CyberSource_Client_V2();
+        $token = isset($_POST['cybs_token']) ? $_POST['cybs_token'] : '';
 
-            // $request = new CyberSource("absa_seymedser_eur_0980284", "RI7DrCchKS7iInkmtlYEdFY/ylRUmDXHa4sAKlN2yD2+r0uEcbKBpdai8tBle/PsKC0nljo669wH1w6ebzD0XER9yxmPxf5aYE4tGhWOC0WLhF6s/oRUQwWmnQCYP7hIKAUgUtAfTdDhOqnx11/zaC675ClM/PTGDYaTZfTCFjNGFlclkogHcbt8oGXEJXNch45sS3l+nBQF8pPeanQrvPwWsG5wsQTwMayEDchFpg51SdJbnWHChvMoeaJ4MvwBd/PEqhlY0TyScdSlHdxgHaPPQ3MClMNYEKG0L3SMQpJHnXBkFicnjUcn0R2qVd3EobmKwClE5SgpXm9Px4TyAA==", "Live");
-
-            $request = new CyberSource("caliphsoft_web_test", "Q1zcCMzFHm0QjOSDQmfsECLQpP9V7AqfFcEkb761HZiruMA+PmiotFHSIEKl1om0JqYNJsa0MbvBuy9Pxoua6fFT1YKPlZ/xiLTjTj1Aie1nskvTlSudxD5eIA3MuenEVlhmuQ9+PKoBvQCRHSZZ4187cAPmI8qk5we5WaHnUm9nhI6xsDHBLgUvy57R8DAg1tvdeaEyORMC5pYpiHKrPOA/E+FQovRapllEgZiuEeI3BnxsscSrHVmdsmDHHXYDuG77JGIU4Zb8VRDnu3hq4kBLlkoNO+st9+zZx0cyM7P0P57lc4DMkvY07+wjFK7clG9qxl4K2r6SbrM4xl+trA==", "Test");
-
-            $request->currency  = 'EUR';
+        if (empty($token)) {
+             $booking_status = "false";
+             $error = "Payment token missing. Please try again.";
         } else {
-            // $request = new CyberSource("absa_seymedser_scr_0980318", "TyjfGjssAE6/UfRndDqk2jjTxHUaCm4rbQjKNnxMQ4YWdOI+DbmaWUxQxpKajHfiDYZuliw0J4ezMP8dgKYu1SscveV5dBO4nNTsRgZOmNv3Pt2GCjTPhh13coeOIu+EBj1duO8CYuIoFVrST0TeYfh0xrJWs6mN6lQmydQiywBxdbxzMey9FX9bqWnVDTIsaV/oQG9LZLHnI2R5CLA7uxDr0ZYO+t02jLCiZLRb82l/z9xGerM1OQaQgJthe6xoPhPargQrmWYVLzbBb1ZjQv/bLYAdn1SEQ9FLxvWl+sGh/ia0DUr3xTDFiiQAJO3sqw8Wy4hUdreF67swTJhrAA==", "Live");
-            $request = new CyberSource("caliphsoft_web_test", "Q1zcCMzFHm0QjOSDQmfsECLQpP9V7AqfFcEkb761HZiruMA+PmiotFHSIEKl1om0JqYNJsa0MbvBuy9Pxoua6fFT1YKPlZ/xiLTjTj1Aie1nskvTlSudxD5eIA3MuenEVlhmuQ9+PKoBvQCRHSZZ4187cAPmI8qk5we5WaHnUm9nhI6xsDHBLgUvy57R8DAg1tvdeaEyORMC5pYpiHKrPOA/E+FQovRapllEgZiuEeI3BnxsscSrHVmdsmDHHXYDuG77JGIU4Zb8VRDnu3hq4kBLlkoNO+st9+zZx0cyM7P0P57lc4DMkvY07+wjFK7clG9qxl4K2r6SbrM4xl+trA==", "Test");
+            $billTo = [
+                "firstName" => $first_name,
+                "lastName"  => $last_name,
+                "address1"  => "test street",
+                "locality"  => "test district",
+                "administrativeArea" => "NY",
+                "postalCode" => "13333",
+                "country"    => "GH",
+                "email"      => $email_address,
+                "ipAddress"  => $_SERVER['REMOTE_ADDR']
+            ];
 
-            $request->currency = 'SCR';
-        }
-        $request->reference_code = "Booking ID:" . $random_id;
-        $billTo = new stdClass();
-        $billTo->firstName = $first_name;
-        $billTo->lastName = $last_name;
-        $billTo->street1 = "test street";
-        $billTo->city = "test district";
-        $billTo->state = "NY";
-        $billTo->postalCode = "13333";
-        $billTo->country = "GH";
-        $billTo->email = $email_address;
-        $billTo->ipAddress = $_SERVER['REMOTE_ADDR'];
-        $card = new stdClass();
-        $card->accountNumber = $accountNumber;
-        $card->fullName = $_POST['fullName'];
-        $card->expirationMonth = $expirationMonth;
-        $card->expirationYear = $expirationYear;
-        $card->cvv = $card_cvv;
-        $card->cardType = @$request->card_types[$cardType];
-        $request->billTo = $billTo;
-        $request->card = $card;
-        $error = null;
-        $success = null;
+            // We do NOT send card details directly anymore.
+            // We only send the token.
+            
+            $res = $client->create_payment($grand_total_amount_to_be_charged, $selected_currency, $token, $billTo);
 
-
-
-        try {
-            $request->charge($grand_total_amount_to_be_charged);
-        } catch (Exception $exp) {
-            $booking_status = "false";
-            $error .= $exp->getMessage();
-        }
-
-
-
-
-        if ($request->response && $request->response->resMessage) {
-            if (!$request->response->success) {
-                $error .=  $request->response->resMessage;
-                $booking_status = false;
+            if (is_wp_error($res)) {
+                $booking_status = "false";
+                $error .= $res->get_error_message();
             } else {
+                // Check response code
+                if (isset($res['json']['status']) && $res['json']['status'] === 'AUTHORIZED') {
+                     // Success!
+                     $success = "Thank you for booking an appointment!";
+                } else {
+                     $booking_status = "false";
+                     $error .= "Payment failed: " . (isset($res['json']['status']) ? $res['json']['status'] : 'Unknown error');
+                }
+            }
+        }
+
+        // Legacy variable for compatibility with below code if needed, though we set $success/$error above
+        // if ($request->response && $request->response->resMessage) {
+        if ($booking_status !== "false") {
+            // if (!$request->response->success) {
+            //     $error .=  $request->response->resMessage;
+            //     $booking_status = false;
+            // } else {
 
 
 
@@ -523,7 +510,7 @@ wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website
 
 
             // code to uncomment *********************
-        }
+        // }
     }
 }
 ?>
@@ -2250,8 +2237,9 @@ wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website
             <span>
               <label for="">Credit card number</label>
               <div style="position:relative">
-                <input data-value="Credit Card Number" onfocus=active_input(this) onfocusout=inactive_input(this)
-                  type="text" id="accountNumber" name="accountNumber" placeholder="Credit card number">
+                <!-- <input data-value="Credit Card Number" onfocus=active_input(this) onfocusout=inactive_input(this)
+                  type="text" id="accountNumber" name="accountNumber" placeholder="Credit card number"> -->
+                  <div id="cybs-card-number-container" style="height: 50px; border: 1px solid black; padding: 10px;"></div>
                 <!-- Card Images Start -->
                 <div class="card-img-wrapper">
 
@@ -2369,7 +2357,7 @@ wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website
           <div class="payment-row-exp">
             <span>
               <label for="month" class="bs-label">Expiration month</label>
-              <select id="month" name="expirationMonth" class="col-50">
+              <select id="cybs-expiration-month" name="expirationMonth" class="col-50">
                 <option value="">Expiration month</option>
                 <option value="01">January</option>
                 <option value="02">February</option>
@@ -2387,7 +2375,7 @@ wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website
             </span>
             <span>
               <label for="year" class="bs-label">Expiration year</label>
-              <select id="year" name="expirationYear" class="col-50">
+              <select id="cybs-expiration-year" name="expirationYear" class="col-50">
                 <option value="">Expiration year</option>
                 <?php
                                 $start_year = date("Y");
@@ -2413,9 +2401,11 @@ wp_mail($booking_data['email'], 'Booking confirmation ' . $booking_data['website
             </span>
             <span>
               <label for="cardCvv" class="bs-label">Card cvv</label>
-              <input data-value="CVV" onfocus=active_input(this) onfocusout=inactive_input(this) type="text"
-                id="cardCvv" name="card_cvv" placeholder="Card cvv no" style="max-height:50px">
+              <!-- <input data-value="CVV" onfocus=active_input(this) onfocusout=inactive_input(this) type="text"
+                id="cardCvv" name="card_cvv" placeholder="Card cvv no" style="max-height:50px"> -->
+                <div id="cybs-security-code-container" style="height: 50px; border: 1px solid black; padding: 10px;"></div>
             </span>
+            <input type="hidden" id="cybs_token" name="cybs_token">
           </div>
           <input type="text" id="grandTotalAmountToBeCharged" name="grand_total_amount_to_be_charged" value="0" hidden>
           <!-- <div class="row">
@@ -3182,10 +3172,10 @@ function validateForm() {
   var testLocation = document.getElementById("testLocation");
   var selectedTest = document.getElementById("selectedTest");
   var selectedTimeSlot = document.getElementById("selectedTimeSlot");
-  var month = document.getElementById("month").value;
-  var year = document.getElementById("year").value;
+  var month = document.getElementById("cybs-expiration-month").value;
+  var year = document.getElementById("cybs-expiration-year").value;
   var cardType = document.getElementById("cardType").value;
-  var accountNumber = document.getElementById("accountNumber");
+  // var accountNumber = document.getElementById("accountNumber");
   var fullName = document.getElementById("fullName");
   var errorTimeSlot = document.getElementById('errorTimeSlot');
   returnValue = emptyInput(firstName);
@@ -3195,9 +3185,9 @@ function validateForm() {
   returnValue = checkEmptySelectInput(selectedTest);
   returnValue = emptyInput(testDate);
   returnValue = ValidateEmail(emailAddress);
-  returnValue = ValidateCardNumber(accountNumber);
+  // returnValue = ValidateCardNumber(accountNumber);
   returnValue = emptyInput(fullName);
-  returnValue = emptyInput(accountNumber);
+  // returnValue = emptyInput(accountNumber);
   if (selectedTimeSlot.value == "") {
     errorTimeSlot.style.display = "block";
   } else {
@@ -3641,4 +3631,67 @@ function valid_tele_consultation_options() {
   }
   return valid;
 }
+</script>
+
+<script>
+// Initialize CyberSource Handler
+let cybs;
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize the handler
+    if (typeof SdvCyberSourceHandlerV2 !== 'undefined') {
+        cybs = new SdvCyberSourceHandlerV2(cybs_object);
+        cybs.initCyberSource();
+    } else {
+        console.error("SdvCyberSourceHandlerV2 is not defined. Make sure the script is enqueued.");
+    }
+
+    // Intercept form submission
+    const submitBtn = document.getElementById('submitForm');
+    if (submitBtn) {
+        // Remove the inline onclick attribute to prevent default validation/submission
+        submitBtn.removeAttribute('onclick');
+        
+        submitBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            // Run existing validation (modified to skip card number)
+            if (!validateForm()) {
+                console.log("Validation failed");
+                return;
+            }
+            
+            // Show loading state
+            const originalText = submitBtn.value;
+            submitBtn.value = "Processing Payment...";
+            submitBtn.disabled = true;
+            
+            try {
+                // Ensure we have a token
+                const token = await cybs.ensureToken();
+                console.log("Token obtained:", token);
+                
+                // Set submit check
+                const submitCheck = document.getElementById('submitCheck');
+                if (submitCheck) submitCheck.value = "yes";
+                
+                // Submit the form
+                // Try to find the correct form
+                let form = document.getElementById('myBookingForm');
+                if (!form) form = document.getElementsByName('myForm')[0];
+                
+                if (form) {
+                    form.submit();
+                } else {
+                    console.error("Form not found!");
+                    alert("System Error: Form not found. Please contact support.");
+                }
+            } catch (err) {
+                console.error("Payment Error:", err);
+                alert("Payment processing failed: " + err.message);
+                submitBtn.value = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+});
 </script>
