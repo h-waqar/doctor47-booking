@@ -42,6 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selected_time_slot = test_input($_POST['selected_time_slot']);
 
         $selected_currency = !empty($_POST['selected_currency']) ? strtoupper(test_input($_POST['selected_currency'])) : 'USD';
+        if ($selected_currency === 'EURO') {
+            $selected_currency = 'EUR';
+        }
         
         // Removed legacy card fields (accountNumber, expirationMonth, expirationYear, cardType)
         // as they are no longer submitted to the server.
