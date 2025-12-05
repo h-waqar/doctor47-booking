@@ -11,10 +11,17 @@
 
 
 //ADDED
+define('CC_PLUGIN_BASEFILE', __FILE__);
+define('CC_PLUGIN_VERSION', '1.0');
+
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
 require __DIR__ . "/vendor/autoload.php";
+
+// Initialize New CyberSource Integration
+require_once __DIR__ . '/lib/cybersourcev2/class-sdv-cybersource-integration.php';
+new Sdv_CyberSource_Integration();
 //END
 $website_title = "Doctor247";
 
